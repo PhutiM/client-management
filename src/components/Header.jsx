@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-  },
+  }
 }));
 
 export default function ButtonAppBar(props) {
@@ -25,7 +26,7 @@ export default function ButtonAppBar(props) {
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             {props.description}
-          </Typography>
+          </Typography>    
         </Toolbar>
       </AppBar>
     </div>

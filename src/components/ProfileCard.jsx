@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -8,7 +8,6 @@ import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import MuiTableCell from "@material-ui/core/TableCell"
 import TableContainer from '@material-ui/core/TableContainer'
-import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import Button from '@material-ui/core/Button'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -19,9 +18,9 @@ import { useHistory } from "react-router-dom"
 
 const TableCell = withStyles({
     root: {
-      borderBottom: "none"
+        borderBottom: "none"
     }
-  })(MuiTableCell)
+})(MuiTableCell)
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginTop: 40,
-      },
+    },
     cover: {
         width: 151,
     },
@@ -49,23 +48,27 @@ const useStyles = makeStyles((theme) => ({
         width: '250px',
         margin: '20px',
         display: 'inline-block'
-  },
-  sortBy: {
-    width: '60px',
-    margin: '5px',
-    display: 'inline-block'
-},
-  topBar: {
-   display: 'inline-block'
-  },
+    },
+    sortBy: {
+        width: '60px',
+        margin: '5px',
+        display: 'inline-block'
+    },
+    topBar: {
+        position: 'sticky',
+        top: 0,
+        bottom: 20,
+        width: '100%',
+        backgroundColor: '#f9f9f9'
+
+    },
     container: {
         maxHeight: 900,
         left: "30%"
     },
     selectField: {
-        display: 'inline-block',
         margin: '5px',
-        width: '350px',
+        width: '500px',
         [theme.breakpoints.down('sm')]: {
             width: '100%'
         }
@@ -76,38 +79,34 @@ export const ProfileCard = (props) => {
     const { profiles, profileActions } = props
     const classes = useStyles()
 
-    const [rowsPerPage, setRowsPerPage] = useState(5)
+    const [rowsPerPage, setRowsPerPage] = useState(50)
     const [order, setOrder] = useState('asc')
     const [orderBy, setOrderBy] = useState('first')
     const [page, setPage] = useState(0)
     const [isSearchEnabled, setSearch] = useState(false)
     const [mounted, setMounted] = useState(true)
     const [profileData, setProfiles] = useState([])
-   
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10))
-        setPage(0)
-    }
+
 
     const handleSearch = event => {
 
         let filteredDatas = []
         let nameSearch = event.target.value
         if (nameSearch === "") {
-          setSearch(false)
+            setSearch(false)
         } else {
-          setSearch(true)
+            setSearch(true)
         }
 
         filteredDatas = profiles.filter(profile =>
             profile.name.first.toLowerCase().includes(nameSearch.toLowerCase()) ||
             profile.name.last.toLowerCase().includes(nameSearch.toLowerCase()) ||
             profile.location.city.toLowerCase().includes(nameSearch.toLowerCase())
-          )
+        )
 
         setProfiles(filteredDatas)
     }
-    
+
     useEffect(() => {
         if (mounted && profiles.length > 1) {
             setProfiles(profiles)
@@ -115,7 +114,7 @@ export const ProfileCard = (props) => {
         }
     }, [mounted, profiles])
 
-    
+
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
             return -1;
@@ -124,10 +123,6 @@ export const ProfileCard = (props) => {
             return 1;
         }
         return 0;
-    }
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage)
     }
 
     function stableSort(array, comparator) {
@@ -152,92 +147,74 @@ export const ProfileCard = (props) => {
 
     const goToDetails = (profile) => {
         profileActions.getProfileInfo(profile)
-         history.push('/profileDetails')
+        history.push('/profileDetails')
     }
-  
-    const handleChange = (event) => {
-        setOrder(event.target.value);
-    }
-    
+
     return (
         <Grid>
             <TableContainer className={classes.container}>
-           <Grid className={classes.topBar}>
-            <TextField
-                    className={classes.selectField}
-                    label={'Search'}
-                    type="search"
-                    InputProps={{
-                        endAdornment: isSearchEnabled ? null :
-                            <InputAdornment position="end">
-                                {/* <SearchIcon /> */}
-                            </InputAdornment>
-                    }}
-                    theme={{
-                        container: classes.container
-                    }}
-                    onChange={(event) => handleSearch(event)}
-                />
-            </Grid>
-            {profileData.length > 0 ? 
-                <Table
-                    className={classes.table}
-                    aria-labelledby="tableTitle"
-                    size={'small'}
-                    aria-label="enhanced table"
-                > <TableBody>
-                        {stableSort(profileData, getComparator(order, orderBy))
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((profile, index) => {
-                                return (
-                                    <TableRow style={{border: "0px transparent"}}>
-                                        <TableCell>
+                <Grid className={classes.topBar}>
+                    <TextField
+                        className={classes.selectField}
+                        label={'Search'}
+                        type="search"
+                        theme={{
+                            container: classes.container
+                        }}
+                        onChange={(event) => handleSearch(event)}
+                    />
+                </Grid>
+
+
+                {profileData.length > 0 ?
+                    <Table
+                        className={classes.table}
+                        aria-labelledby="tableTitle"
+                        size={'small'}
+                        aria-label="enhanced table"
+                    > <TableBody>
+                            {stableSort(profileData, getComparator(order, orderBy))
+                                .map((profile, index) => {
+                                    return (
+                                        <TableRow style={{ border: "0px transparent" }}>
+                                            <TableCell>
                                                 <Card key={index} className={classes.card}>
-                                                <Grid className={classes.imageGrid}>
-                                                    <img className={classes.profilePicture} width={150} src={profile.picture.large} />
-                                                </Grid>
+                                                    <Grid className={classes.imageGrid}>
+                                                        <img className={classes.profilePicture} width={150} src={profile.picture.large} />
+                                                    </Grid>
                                                     <CardContent className={classes.content}>
                                                         <Typography variant="h6">
-                                                           Name: {profile.name.first} 
+                                                            Name: {profile.name.first}
                                                         </Typography>
                                                         <Typography>
-                                                           Surname: {profile.name.last} 
+                                                            Surname: {profile.name.last}
                                                         </Typography>
                                                         <Typography>
                                                             {console.log(profile)}
                                                             Date of Birth: {profile.dob.date}
                                                         </Typography>
-                                                    <Button
-                                                        variant="contained"
-                                                        color="secondary"
-                                                        className={classes.button}
-                                                        onClick={() => goToDetails(profile)} 
-                                                    >
-                                                        See More 
+                                                        <Button
+                                                            variant="contained"
+                                                            color="secondary"
+                                                            className={classes.button}
+                                                            onClick={() => goToDetails(profile)}
+                                                        >
+                                                            See More
                                                      </Button>
                                                     </CardContent>
-                                                </Card> 
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 33 * emptyRows }}>
-                                <TableCell colSpan={6} />
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table> : <LoadingError /> }
+                                                </Card>
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            {emptyRows > 0 && (
+                                <TableRow style={{ height: 33 * emptyRows }}>
+                                    <TableCell colSpan={6} />
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table> : <LoadingError />}
             </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={profileData.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
         </Grid>
     )
 }
@@ -245,9 +222,9 @@ export const ProfileCard = (props) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-      profileActions: bindActionCreators(Action, dispatch)
+        profileActions: bindActionCreators(Action, dispatch)
     }
-  }
+}
 
 export default connect(null, mapDispatchToProps)(ProfileCard)
 

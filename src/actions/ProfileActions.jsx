@@ -2,7 +2,7 @@ import * as types from '../ProfileType'
 import * as Api from '../api'
 
 export const getProfile = () => (dispatch) => {
-    let url = `https://randomuser.me/api/?results=50`
+    let url = `https://randomuser.me/api/?results=500`
     return Api.getProfiles(url).then((res) => {
         dispatch(receiveProfiles(res.results))
       })
