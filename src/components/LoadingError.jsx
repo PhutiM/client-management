@@ -3,7 +3,6 @@ import {Grid} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography';
 
-
 const useStyles = makeStyles((theme) => ({
     card: {
         left: "50%",
@@ -24,7 +23,8 @@ export const LoadingError = () => {
              </Typography>
         <img
             className={classes.cover}
-            src=""
+            src={'../resources/images/somethingWentWrong.png'}
+            width={200}
             alt="Ooops, theres not data to display"
         />
         </Grid>

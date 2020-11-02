@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import { Grid, Typography, MenuItem, Select, TextField } from '@material-ui/core'
+import { Grid, Typography, TextField } from '@material-ui/core'
 import LoadingError from "./LoadingError"
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
