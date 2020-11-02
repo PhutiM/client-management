@@ -10,7 +10,6 @@ import MuiTableCell from "@material-ui/core/TableCell"
 import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
 import Button from '@material-ui/core/Button'
-import InputAdornment from '@material-ui/core/InputAdornment'
 import * as Action from '../actions/ProfileActions'
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
