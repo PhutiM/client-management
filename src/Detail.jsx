@@ -9,7 +9,7 @@ function Home(props) {
   const { profileInfo } = props
   return (
     <Grid>
-      <Header description="Client Details"/>
+      <Header description="User Details"/>
       <ProfileDetails profileInfo={profileInfo} />
     </Grid>
   )

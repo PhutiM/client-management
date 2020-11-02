@@ -179,7 +179,7 @@ export const ProfileCard = (props) => {
                                             <TableCell>
                                                 <Card key={index} className={classes.card}>
                                                     <Grid className={classes.imageGrid}>
-                                                        <img className={classes.profilePicture} width={150} src={profile.picture.large} />
+                                                        <img className={classes.profilePicture} width={150} al={""} src={profile.picture.large} />
                                                     </Grid>
                                                     <CardContent className={classes.content}>
                                                         <Typography variant="h6">

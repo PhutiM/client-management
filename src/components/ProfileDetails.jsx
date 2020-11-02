@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
         margin: "10px",
         border: "2px solid #520141"
     },
-    button: {
-        marginTop: 40,
+    buttonContainer: {
+        margin: 10,
     },
     cover: {
         width: 151,
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             width: '100%'
         }
-    },
+    }
 }))
 
 
@@ -80,14 +80,20 @@ export const ProfileDetails = (props) => {
 
     return (
         <Grid>
-            <Button variant="outlined" color="secondary" onClick={() => goBack()}>Back To Profiles</Button>
+            <Grid className={classes.buttonContainer}>
+            <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => goBack()}>Back To Users
+            </Button>
+            </Grid>
            <Grid>
            <img className={classes.profilePicture} width={250} src={profileInfo.picture.large} />
            </Grid>
             <Grid className={classes.container}>
                 <Grid contai className={classes.userDetails}>
                 <Grid container>
-                    <Typography className={classes.heading}>Personal Details</Typography>
+                    <Typography className={classes.heading}>User Details</Typography>
                     </Grid>
                     <Grid container>
                     <TextField
